@@ -144,7 +144,7 @@ function AltitudeLadder() {
                       style={{ width: `${row.oxygen}%` }}
                     />
                   </span>
-                  <span className="data-value w-12 text-right text-granite">{row.oxygen} %</span>
+                  <span className="data-value w-14 whitespace-nowrap text-right text-granite">{row.oxygen} %</span>
                 </span>
               </td>
             </tr>

@@ -62,7 +62,7 @@ export default function Guides() {
         <ul className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {GUIDES.map((guide, index) => (
             <Reveal as="li" key={guide.name} style={{ transitionDelay: `${index * 70}ms` }}>
-              <div className={`relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] ${guide.hue}`}>
+              <div className={`relative aspect-[2/1] overflow-hidden sm:aspect-[4/5] rounded-[var(--radius-card)] ${guide.hue}`}>
                 <div
                   aria-hidden="true"
                   className="topo absolute inset-0 bg-white/25"

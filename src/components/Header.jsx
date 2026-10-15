@@ -83,7 +83,7 @@ export default function Header() {
               <a
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="flex min-h-12 items-center border-b border-line/50 font-display text-2xl font-extrabold font-narrow text-granite last:border-0"
+                className="flex min-h-12 items-center font-display text-2xl font-extrabold font-narrow text-granite"
               >
                 {link.label}
               </a>

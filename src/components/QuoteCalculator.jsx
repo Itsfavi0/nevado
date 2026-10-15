@@ -164,6 +164,22 @@ export default function QuoteCalculator({ routeId, onRouteChange, onRequest }) {
                 })}
               </div>
             </fieldset>
+
+            {/* En móvil el desglose queda lejos: este resumen acompaña mientras eliges. */}
+            <div className="sticky bottom-3 z-10 flex items-center justify-between gap-4 rounded-full bg-granite py-2 pl-5 pr-2 text-white shadow-[var(--shadow-lift)] lg:hidden">
+              <p className="text-sm">
+                {quote ? (
+                  <>
+                    Total <span className="data-value ml-1 text-lg">{formatSoles(quote.total)}</span>
+                  </>
+                ) : (
+                  'Elige otro mes'
+                )}
+              </p>
+              <a href="#quote-summary-title" className="btn btn-primary min-h-11 px-4 text-sm">
+                Ver desglose
+              </a>
+            </div>
           </form>
 
           <aside aria-labelledby="quote-summary-title" className="lg:col-span-5">

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { routes } from '../data/routes'
 import { MONTHS } from '../lib/quote'
 import { AlertIcon, CheckIcon } from './Icons'
@@ -93,6 +93,11 @@ function ContactForm({ prefill }) {
   const confirmationRef = useRef(null)
   const months = upcomingMonthOptions()
 
+  // Al confirmar, el foco pasa al mensaje para que lectores de pantalla lo anuncien.
+  useEffect(() => {
+    if (sent) confirmationRef.current?.focus()
+  }, [sent])
+
   const update = (event) => {
     const { name, value } = event.target
     const next = { ...values, [name]: value }
@@ -117,7 +122,6 @@ function ContactForm({ prefill }) {
       return
     }
     setSent({ name: values.name.trim().split(' ')[0], email: values.email.trim() })
-    requestAnimationFrame(() => confirmationRef.current?.focus())
   }
 
   if (sent) {
@@ -126,7 +130,7 @@ function ContactForm({ prefill }) {
         <span className="flex size-12 items-center justify-center rounded-full bg-lagoon text-white">
           <CheckIcon />
         </span>
-        <h3 ref={confirmationRef} tabIndex={-1} className="mt-5 font-display text-4xl font-extrabold font-narrow">
+        <h3 ref={confirmationRef} tabIndex={-1} className="mt-5 outline-none font-display text-4xl font-extrabold font-narrow">
           Consulta recibida, {sent.name}.
         </h3>
         <p className="mt-3 max-w-prose text-rock">

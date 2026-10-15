@@ -81,7 +81,6 @@ export default function ElevationProfile({
             stroke={colors.line}
             strokeWidth={variant === 'card' ? 2 : 2.5}
             strokeLinejoin="round"
-            strokeLinecap="round"
             pathLength="1"
             className={`profile-line ${drawn}`}
           />
@@ -115,7 +114,7 @@ export default function ElevationProfile({
       </div>
 
       {showWaypoints && (
-        <figcaption className="relative mt-2 h-10">
+        <figcaption className={`relative mt-2 h-10 ${variant === 'hero' ? 'hidden sm:block' : ''}`}>
           <span className="sr-only">Puntos de paso: </span>
           {waypoints
             .filter((w) => w.km !== summit[0])
@@ -125,8 +124,8 @@ export default function ElevationProfile({
               return (
                 <span
                   key={`${w.label}-${w.km}`}
-                  className={`absolute top-0 whitespace-nowrap font-mono text-[0.6875rem] ${colors.text} ${align} ${
-                    index % 2 === 1 && list.length > 3 ? 'top-5' : ''
+                  className={`absolute whitespace-nowrap font-mono text-[0.6875rem] ${colors.text} ${align} ${
+                    index % 2 === 1 && list.length > 2 ? 'top-5' : 'top-0'
                   }`}
                   style={{ left: `${left}%` }}
                 >
