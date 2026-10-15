@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { DIFFICULTIES, REGIONS, routes } from '../../data/routes'
 import { plural } from '../../lib/quote'
 import RouteCard from './RouteCard'
@@ -26,25 +26,42 @@ const FILTER_GROUPS = [
 
 const NO_FILTERS = { region: 'all', difficulty: 'all', duration: 'all' }
 
+function matches(route, filters) {
+  return (
+    (filters.region === 'all' || route.region === filters.region) &&
+    (filters.difficulty === 'all' || route.difficulty === filters.difficulty) &&
+    (filters.duration === 'all' || DURATIONS[filters.duration].test(route.days))
+  )
+}
+
+// Para el estado vacío: qué filtro conviene quitar y cuántas rutas aparecerían.
+function bestFilterToDrop(filters) {
+  return FILTER_GROUPS.filter((group) => filters[group.key] !== 'all')
+    .map((group) => ({
+      group,
+      count: routes.filter((route) => matches(route, { ...filters, [group.key]: 'all' })).length,
+    }))
+    .sort((a, b) => b.count - a.count)[0]
+}
+
 export default function RouteExplorer({ onQuote }) {
   const [filters, setFilters] = useState(NO_FILTERS)
   const [openRoute, setOpenRoute] = useState(null)
   const [trigger, setTrigger] = useState(null)
 
-  const visible = useMemo(
-    () =>
-      routes.filter(
-        (route) =>
-          (filters.region === 'all' || route.region === filters.region) &&
-          (filters.difficulty === 'all' || route.difficulty === filters.difficulty) &&
-          (filters.duration === 'all' || DURATIONS[filters.duration].test(route.days)),
-      ),
-    [filters],
-  )
+  const visible = useMemo(() => routes.filter((route) => matches(route, filters)), [filters])
   const filterKey = Object.values(filters).join('-')
   const hasFilters = filterKey !== Object.values(NO_FILTERS).join('-')
 
+  const countRef = useRef(null)
+
   const setFilter = (key, value) => setFilters((current) => ({ ...current, [key]: value }))
+
+  // Los botones de "quitar" desaparecen al pulsarlos: el foco pasa al contador.
+  const clearAndFocus = (next) => {
+    setFilters(next)
+    countRef.current?.focus()
+  }
 
   return (
     <section id="rutas" aria-labelledby="routes-title" className="relative bg-ice/60 py-20 md:py-28">
@@ -72,14 +89,14 @@ export default function RouteExplorer({ onQuote }) {
         </div>
 
         <div className="mt-6 flex min-h-11 items-center justify-between gap-4">
-          <p aria-live="polite" className="text-rock">
+          <p ref={countRef} tabIndex={-1} aria-live="polite" className="text-rock outline-none">
             <span className="data-value text-granite">{visible.length}</span>{' '}
             {plural(visible.length, 'ruta coincide', 'rutas coinciden')}
           </p>
           {hasFilters && (
             <button
               type="button"
-              onClick={() => setFilters(NO_FILTERS)}
+              onClick={() => clearAndFocus(NO_FILTERS)}
               className="min-h-11 rounded-full px-3 text-sm font-semibold text-lagoon underline underline-offset-4"
             >
               Quitar filtros
@@ -103,18 +120,7 @@ export default function RouteExplorer({ onQuote }) {
             ))}
           </div>
         ) : (
-          <div className="pop-in mt-4 rounded-[var(--radius-card)] border border-dashed border-line bg-white/70 px-6 py-12 text-center">
-            <p className="font-display text-3xl font-extrabold font-narrow text-granite">
-              Ninguna ruta cumple los tres filtros.
-            </p>
-            <p className="mx-auto mt-2 max-w-md text-rock">
-              Las rutas largas solo salen en Áncash y Cusco con dificultad exigente o mayor. Prueba otra
-              duración o escríbenos y armamos una a medida.
-            </p>
-            <button type="button" onClick={() => setFilters(NO_FILTERS)} className="btn btn-secondary mt-6">
-              Ver las ocho rutas
-            </button>
-          </div>
+          <EmptyState filters={filters} onDrop={(key) => clearAndFocus({ ...filters, [key]: 'all' })} />
         )}
       </div>
 
@@ -125,6 +131,26 @@ export default function RouteExplorer({ onQuote }) {
         onQuote={onQuote}
       />
     </section>
+  )
+}
+
+function EmptyState({ filters, onDrop }) {
+  const suggestion = bestFilterToDrop(filters)
+  const { group } = suggestion
+  const value = group.options[filters[group.key]]
+  return (
+    <div className="pop-in mt-4 rounded-[var(--radius-card)] border border-dashed border-line bg-white/70 px-6 py-12 text-center">
+      <p className="font-display text-3xl font-extrabold font-narrow text-granite">
+        Ninguna ruta coincide con estos filtros.
+      </p>
+      <p className="mx-auto mt-2 max-w-md text-rock">
+        Sin el filtro «{value}» verías {suggestion.count} {plural(suggestion.count, 'ruta', 'rutas')}. Si
+        buscas algo distinto, escríbenos y armamos una salida a medida.
+      </p>
+      <button type="button" onClick={() => onDrop(group.key)} className="btn btn-secondary mt-6">
+        Quitar «{value}»
+      </button>
+    </div>
   )
 }
 

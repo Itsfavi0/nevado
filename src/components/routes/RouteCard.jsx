@@ -39,7 +39,7 @@ export default function RouteCard({ route, index, onOpen, onQuote }) {
 
         <ElevationProfile route={route} height={96} className="mt-6 pl-8" />
 
-        <RouteFacts route={route} columns="grid-cols-3" className="mt-5 border-t border-line pt-4" />
+        <RouteFacts route={route} columns="grid-cols-3 xl:grid-cols-5" className="mt-5 border-t border-line pt-4" />
 
         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
           <p className="text-sm text-rock">
