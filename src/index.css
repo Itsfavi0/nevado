@@ -38,11 +38,6 @@
   }
 
   body {
-    background: var(--color-snow);
-    color: var(--color-granite);
-    font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -84,6 +79,26 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/*
+ * Fondo, color y tipografía base fuera de @layer: los estilos sin capa le ganan
+ * a los que están en una, así que si quien aloja la página inyecta un
+ * `body { background: #fff; font: 14px … }` (como hace el visor de artifacts),
+ * la página conserva su aspecto. `html body` sube la especificidad.
+ */
+html:root {
+  color-scheme: light;
+  background-color: var(--color-snow);
+}
+
+html body {
+  margin: 0;
+  background-color: var(--color-snow);
+  color: var(--color-granite);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
 }
 
 @utility font-condensed {

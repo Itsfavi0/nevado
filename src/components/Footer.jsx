@@ -57,7 +57,18 @@ export default function Footer() {
         </nav>
       </div>
       <div className="container-page flex flex-col gap-2 border-t border-white/10 py-6 text-sm text-white/60 sm:flex-row sm:justify-between">
-        <p>Nevado es un negocio ficticio, creado como proyecto de portafolio por Favio (@Itsfavi0).</p>
+        <p>
+          Nevado es un negocio ficticio, creado como proyecto de portafolio por{' '}
+          <a
+            href="https://github.com/Itsfavi0"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-white underline decoration-white/40 underline-offset-4 hover:decoration-white"
+          >
+            Favio (@Itsfavi0)
+          </a>
+          .
+        </p>
         <p>Fotos de Unsplash, créditos en el README.</p>
       </div>
     </footer>
