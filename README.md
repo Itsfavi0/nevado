@@ -1,139 +1,144 @@
-# Nevado: expediciones de trekking en los Andes, con la precisión de una carta topográfica
+# Nevado: trekking expeditions in the Andes, with the precision of a topographic map
 
-![Captura de la página de Nevado](docs/screenshot.png)
+**English** · [Español](README.es.md)
 
-**Nevado** es la página web de una operadora de trekking **ficticia** con base en Huaraz que también opera rutas en Cusco. El objetivo de la página es que el visitante explore las rutas, entienda su dificultad y **pida una cotización o reserve**.
+![Screenshot of the Nevado website](docs/screenshot.png)
 
-> Proyecto de portafolio de Favio ([@Itsfavi0](https://github.com/Itsfavi0)). La empresa, los guías y los testimonios son inventados. Las rutas y los lugares son reales, pero las distancias, altitudes y precios son aproximados.
+**Nevado** is the website of a **fictional** trekking operator based in Huaraz that also runs routes in Cusco. The goal of the site is for visitors to explore the routes, understand how hard they are and **request a quote or book**.
 
-## Qué mirar primero
+> Portfolio project by Favio ([@Itsfavi0](https://github.com/Itsfavi0)). The company, guides and testimonials are made up. The routes and places are real, but distances, altitudes and prices are approximate. The site is in Spanish.
 
-1. **El perfil de elevación**. Cada ruta tiene su perfil dibujado en SVG a partir de datos `[km, altitud]`. La línea se traza cuando entra en pantalla. En las tarjetas **todas comparten la misma escala vertical**, así se compara de un vistazo la altura de Laguna 69 con la de Ausangate.
-2. **El explorador de rutas** (`#rutas`). Filtra por región, dificultad y duración. Si ninguna ruta coincide, sugiere qué filtro quitar y cuántas rutas aparecerían.
-3. **El detalle de ruta**. Es un modal accesible con `<dialog>` nativo: muestra el itinerario día por día, los campamentos, la temporada mes a mes y qué incluye. Abre desde el botón pulsado, atrapa el foco, se cierra con Esc y devuelve el foco al botón.
-4. **El cotizador** (`#cotizar`). Eliges ruta, mes (la temporada seca va destacada y los meses sin salidas aparecen bloqueados), personas y extras, y ves el precio en S/ y USD con su desglose. "Pedir esta cotización" rellena el formulario de contacto con un resumen.
+## What to look at first
 
-## Secciones
+1. **The elevation profile**. Each route has its profile drawn in SVG from `[km, altitude]` data. The line draws itself when it enters the screen. On the cards **all profiles share the same vertical scale**, so you can compare Laguna 69 with Ausangate at a glance.
+2. **The route explorer** (`#rutas`). Filter by region, difficulty and duration. If no route matches, it suggests which filter to drop and how many routes would appear.
+3. **The route detail**. An accessible modal built on the native `<dialog>`: it shows the day-by-day itinerary, the camps, the month-by-month season and what's included. It opens from the button you pressed, traps focus, closes with Esc and returns focus to the button.
+4. **The quote calculator** (`#cotizar`). Pick a route, a month (the dry season is highlighted and months without departures are blocked), the number of people and extras, and see the price in S/ and USD with a breakdown. "Pedir esta cotización" fills in the contact form with a summary.
 
-| Sección | Qué hace |
+## Sections
+
+| Section | What it does |
 |---|---|
-| Hero | Titular, CTA y una foto con el perfil de Santa Cruz encima |
-| Por qué Nevado | Cuatro compromisos concretos: grupos de 8, aclimatación, seguridad medible y turismo responsable |
-| Explorador de rutas | 8 rutas con filtros, perfil, datos técnicos y precio |
-| Cómo funciona | Línea de tiempo en cuatro etapas, de la reserva al día 1 |
-| Cotizador | Precio estimado con desglose y paso directo al formulario |
-| Guías | Equipo ficticio, sin fotos de personas reales |
-| Testimonios | Un testimonio destacado y dos secundarios |
-| Preparación y FAQ | Tabla de oxígeno disponible según la altitud, preguntas frecuentes (`<details>`) y lista de equipo |
-| Contacto | Formulario con validación accesible y confirmación en la página |
+| Hero | Headline, CTA and a photo with the Santa Cruz profile on top |
+| Why Nevado | Four concrete commitments: groups of 8, acclimatization, measurable safety and responsible tourism |
+| Route explorer | 8 routes with filters, profile, technical data and price |
+| How it works | A four-stage timeline, from booking to day 1 |
+| Quote calculator | Estimated price with a breakdown and a direct path to the form |
+| Guides | Fictional team, with no photos of real people |
+| Testimonials | One featured testimonial and two secondary ones |
+| Preparation and FAQ | Table of available oxygen by altitude, FAQ (`<details>`) and gear list |
+| Contact | Form with accessible validation and on-page confirmation |
 
 ## Stack
 
 - **React 19** + **Vite 8**
-- **Tailwind CSS 4** (tokens en `@theme`, dentro de `src/index.css`)
-- **oxlint** con los plugins `react` y `jsx-a11y`
-- Fuentes autoalojadas con Fontsource: **Archivo** (variable, con eje de anchura), **Public Sans** e **IBM Plex Mono**
-- Sin librerías de animación ni de componentes
+- **Tailwind CSS 4** (tokens in `@theme`, inside `src/index.css`)
+- **oxlint** with the `react` and `jsx-a11y` plugins
+- Self-hosted fonts via Fontsource: **Archivo** (variable, with a width axis), **Public Sans** and **IBM Plex Mono**
+- No animation or component libraries
 
-## Cómo ejecutarlo
+## Running it
+
+Requires Node 20.19 or later (needed by Vite 8).
 
 ```bash
 npm install
 npm run dev      # http://localhost:5175
-npm run build    # genera dist/
+npm run build    # outputs dist/
 npm run lint
-npm run preview  # sirve dist/ en http://localhost:5175
+npm run preview  # serves dist/ at http://localhost:5175
 ```
 
-## Estructura
+## Structure
 
 ```
 nevado/
 ├─ public/
-│  ├─ images/          fotos de Unsplash recomprimidas a WebP
-│  ├─ topo.svg         curvas de nivel generadas (ver scripts/)
+│  ├─ images/          Unsplash photos recompressed to WebP
+│  ├─ topo.svg         generated contour lines (see scripts/)
 │  ├─ favicon.svg
 │  └─ og-image.jpg
 ├─ scripts/
-│  └─ make_topo.py     genera topo.svg (marching squares sobre un terreno sintético)
+│  └─ make_topo.py     generates topo.svg (marching squares over a synthetic terrain)
 ├─ src/
-│  ├─ data/routes.js   las 8 rutas: perfil, itinerario, temporada y precio
-│  ├─ lib/quote.js     lógica del cotizador (funciones puras)
+│  ├─ data/routes.js   the 8 routes: profile, itinerary, season and price
+│  ├─ lib/quote.js     quote logic (pure functions)
 │  ├─ hooks/           useInView, useElementWidth
 │  ├─ components/
 │  │  ├─ routes/       RouteExplorer, RouteCard, RouteDialog, RouteFacts
 │  │  ├─ ElevationProfile.jsx
 │  │  ├─ QuoteCalculator.jsx
-│  │  └─ …             una sección por archivo
-│  ├─ App.jsx          orden de secciones y estado compartido (ruta a cotizar, datos para el formulario)
-│  └─ index.css        tokens de diseño y estilos base
+│  │  └─ …             one section per file
+│  ├─ App.jsx          section order and shared state (route to quote, form prefill)
+│  └─ index.css        design tokens and base styles
 └─ docs/screenshot.png
 ```
 
-## Decisiones de diseño
+## Design decisions
 
-- **Concepto: "carta topográfica luminosa".** Fondo blanco nieve, fotos grandes y datos técnicos con precisión de mapa. La parte más llamativa es el perfil de elevación, y el resto del diseño se mantiene sobrio para no competir con él.
-- **Paleta de alta montaña**:
+- **Concept: "a luminous topographic map".** A snow-white background, large photos and technical data with map-like precision. The elevation profile is the star, and the rest of the design stays restrained so it doesn't compete with it.
+- **High-mountain palette**:
 
-  | Token | Color | Uso |
+  | Token | Color | Use |
   |---|---|---|
-  | `snow` | `#F6F8F9` | fondo |
-  | `granite` | `#1C2629` | texto y secciones oscuras |
-  | `rock` | `#56656B` | texto secundario (5.7:1) |
-  | `lagoon` | `#0A6E78` | enlaces, botones secundarios, perfiles (6:1 con blanco) |
-  | `flare` | `#F07A2A` | CTA, con texto granito (5.5:1) |
-  | `flare-deep` | `#B44A0C` | naranja como texto sobre claro (5:1) |
+  | `snow` | `#F6F8F9` | background |
+  | `granite` | `#1C2629` | text and dark sections |
+  | `rock` | `#56656B` | secondary text (5.7:1) |
+  | `lagoon` | `#0A6E78` | links, secondary buttons, profiles (6:1 against white) |
+  | `flare` | `#F07A2A` | CTA, with granite text (5.5:1) |
+  | `flare-deep` | `#B44A0C` | orange as text on light backgrounds (5:1) |
 
-- **Tipografía.** Archivo con eje de anchura (`font-stretch` 64–80 %) para los titulares: es una grotesca condensada que recuerda a la señalética de montaña. Public Sans para leer e IBM Plex Mono solo para datos técnicos (km, m, S/).
-- **Curvas de nivel reales.** `topo.svg` no es un dibujo a mano: es la salida de `scripts/make_topo.py`, que traza contornos sobre un terreno sintético y engrosa una de cada cinco curvas, como en una carta del IGN. Se aplica con `mask-image`, así que su color se controla desde CSS.
-- **Sin fotos de personas para los guías.** Cada guía se presenta con sus iniciales sobre una textura topográfica, en vez de usar fotos de stock que pasarían por gente real.
-- **Fotos con respaldo.** Si una foto no carga, `Photo.jsx` muestra el fondo topográfico del mismo tamaño. Choquequirao no tiene foto a propósito, para que el respaldo se vea funcionando.
-- **Números en estilo RAE.** `4750 m` sin separador y `12.500` con punto (`Intl.NumberFormat('es-ES')`).
+- **Typography.** Archivo with its width axis (`font-stretch` 64–80%) for headlines: a condensed grotesque reminiscent of mountain signage. Public Sans for reading and IBM Plex Mono only for technical data (km, m, S/).
+- **Real contour lines.** `topo.svg` is not hand-drawn: it is the output of `scripts/make_topo.py`, which traces contours over a synthetic terrain and thickens every fifth line, like on a national survey map. It is applied with `mask-image`, so its color is controlled from CSS.
+- **No photos of people for the guides.** Each guide is shown with their initials over a topographic texture, instead of stock photos that would pass for real people.
+- **Photos with a fallback.** If a photo fails to load, `Photo.jsx` shows the topographic background at the same size. Choquequirao has no photo on purpose, so the fallback can be seen working.
+- **Numbers in Spanish (RAE) style.** `4750 m` with no separator and `12.500` with a period (`Intl.NumberFormat('es-ES')`).
 
-## Decisiones técnicas
+## Technical decisions
 
-- **`<dialog>` nativo para el modal.** `showModal()` vuelve inerte el resto de la página, atrapa el foco y cierra con Esc sin tener que escribir un focus-trap a mano. Intercepto el evento `cancel` para animar la salida, y el `transform-origin` se calcula desde el botón que lo abrió.
-- **El perfil mide su ancho real** (`ResizeObserver`). Así el `viewBox` coincide con los píxeles, el trazo no se deforma y la animación de `stroke-dashoffset` funciona en cualquier tamaño. La curva es monótona (Fritsch–Carlson) para que no aparezcan "picos fantasma" por encima de la altitud real.
-- **Sin Motion ni GSAP.** Todo el movimiento cabe en CSS (`transform` y `opacity`) más `IntersectionObserver`. Así se evitan decenas de KB de JavaScript.
-- **Cotizador como funciones puras** (`lib/quote.js`): temporada, descuento por grupo, extras por día y conversión a USD. Así es fácil de leer y de probar.
-- **Estado compartido mínimo en `App.jsx`**: qué ruta está en el cotizador y qué datos rellenan el formulario. El formulario se monta de nuevo con un `key` cuando llega una cotización nueva, en vez de sincronizar estados.
+- **Native `<dialog>` for the modal.** `showModal()` makes the rest of the page inert, traps focus and closes with Esc without a hand-written focus trap. I intercept the `cancel` event to animate the exit, and the `transform-origin` is computed from the button that opened it.
+- **The profile measures its real width** (`ResizeObserver`). That way the `viewBox` matches the pixels, the stroke doesn't distort and the `stroke-dashoffset` animation works at any size. The curve is monotone (Fritsch–Carlson) so no "phantom peaks" appear above the real altitude.
+- **No Motion or GSAP.** All the motion fits in CSS (`transform` and `opacity`) plus `IntersectionObserver`, which saves tens of KB of JavaScript.
+- **Quote calculator as pure functions** (`lib/quote.js`): season, group discount, per-day extras and USD conversion. Easy to read and to test.
+- **Base styles outside `@layer`**: the `body` background, color and typography live outside Tailwind's layers. Unlayered styles always beat layered ones, so if whoever hosts the page injects their own `body { font: 14px … }` (which happens when it is embedded in viewers or previews), the page keeps its typography and background.
+- **Minimal shared state in `App.jsx`**: which route is in the calculator and what data prefills the form. The form remounts with a `key` when a new quote arrives, instead of syncing state.
 
-## Accesibilidad
+## Accessibility
 
-- HTML semántico, un solo `h1`, encabezados en orden y enlace "Saltar al contenido".
-- Contraste AA verificado en todos los pares de color (el más justo es 5:1).
-- Foco visible en todo. Filtros con `aria-pressed` y contador de resultados con `aria-live`. Cuando un botón desaparece al pulsarlo, el foco pasa al contador.
-- Modal con foco atrapado, cierre con Esc o con el botón, y devolución del foco.
-- Formulario con `label` visibles, `aria-invalid` y errores junto a cada campo enlazados con `aria-describedby`. Al enviar, el foco va al primer campo con error, o al mensaje de confirmación si todo está bien.
-- Los perfiles SVG tienen un resumen en texto para lectores de pantalla ("50 km, punto más alto 4750 m en Punta Unión").
-- Objetivos táctiles de 44 px como mínimo y `prefers-reduced-motion` respetado (sin trazos animados ni revelaciones).
+- Semantic HTML, a single `h1`, headings in order and a "Skip to content" link.
+- AA contrast checked on every color pair (the tightest is 5:1).
+- Visible focus everywhere. Filters use `aria-pressed` and the results counter uses `aria-live`. When a button disappears after being pressed, focus moves to the counter.
+- Modal with trapped focus, closing with Esc or the button, and focus returned afterwards.
+- Form with visible `label`s, `aria-invalid` and errors next to each field linked via `aria-describedby`. On submit, focus goes to the first invalid field, or to the confirmation message if everything is valid.
+- The SVG profiles have a text summary for screen readers ("50 km, highest point 4750 m at Punta Unión").
+- Touch targets of at least 44 px and `prefers-reduced-motion` respected (no animated strokes or reveals).
 
-## Rendimiento
+## Performance
 
-- Las 10 fotos pesan ≈ 620 KB en total (WebP), con `width`/`height`, `loading="lazy"` debajo del pliegue y la del hero con `preload` y `srcset`.
-- Fuentes autoalojadas con `font-display: swap` y subconjuntos por `unicode-range`.
-- JS de producción: ~92 KB gzip (casi todo React).
+- The 10 photos weigh ≈ 620 KB in total (WebP), with `width`/`height`, `loading="lazy"` below the fold, and the hero photo with `preload` and `srcset`.
+- Self-hosted fonts with `font-display: swap` and `unicode-range` subsets.
+- Production JS: ~92 KB gzipped (mostly React).
 
-## Créditos de imágenes (Unsplash)
+## Image credits (Unsplash)
 
-| Uso | Autor |
+| Use | Author |
 |---|---|
-| Hero (caminantes en la Cordillera Blanca) | [danny uscamayta](https://unsplash.com/@danny86) |
+| Hero (hikers in the Cordillera Blanca) | [danny uscamayta](https://unsplash.com/@danny86) |
 | Laguna 69 | [Tamara Bravo](https://unsplash.com/@tamiwanders) |
 | Santa Cruz | [Edward Blanco](https://unsplash.com/@leblanc_) |
-| Circuito Huayhuash | [Wolfgang Lutz](https://unsplash.com/@wolfi) |
+| Huayhuash Circuit | [Wolfgang Lutz](https://unsplash.com/@wolfi) |
 | Laguna Churup | [Aarom Ore](https://unsplash.com/@creatorsproduce) |
-| Salkantay (laguna Humantay) | [Javier Nuñez](https://unsplash.com/@javierportales) |
+| Salkantay (Humantay lake) | [Javier Nuñez](https://unsplash.com/@javierportales) |
 | Ausangate | [Ausangate Peru](https://unsplash.com/@ausangateperu) |
 | Quilcayhuanca – Cojup | [Jacob Vizek](https://unsplash.com/@jakevizek) |
-| Contacto (atardecer en Santa Cruz) | [Marek Piwnicki](https://unsplash.com/@marekpiwnicki) |
+| Contact (sunset in Santa Cruz) | [Marek Piwnicki](https://unsplash.com/@marekpiwnicki) |
 
-Todas las fotos son de Perú y se usan bajo la [licencia de Unsplash](https://unsplash.com/license). En las rutas sirven para ilustrar: no siempre muestran exactamente el punto de la ruta.
+All photos are from Peru and are used under the [Unsplash License](https://unsplash.com/license). On the routes they are illustrative: they don't always show the exact spot on the route.
 
-## Ideas futuras
+## Future ideas
 
-- Calendario de salidas con cupos reales y reserva con adelanto (pasarela en modo prueba).
-- Mapa de cada ruta con el trazado GPX y los campamentos sincronizados con el perfil (al pasar el cursor por el perfil, se marca el punto en el mapa).
-- Versión en inglés: buena parte de quienes hacen trekking en Huaraz son extranjeros.
-- Pruebas unitarias de `lib/quote.js` con Vitest.
-- URL absoluta en `og:image` cuando el sitio tenga dominio.
+- Departure calendar with real availability and booking with a deposit (payment gateway in test mode).
+- A map of each route with the GPX track and camps synced to the profile (hovering the profile marks the point on the map).
+- An English version of the site: many of the people trekking in Huaraz are foreigners.
+- Unit tests for `lib/quote.js` with Vitest.
+- An absolute URL in `og:image` once the site has a domain.
