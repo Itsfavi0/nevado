@@ -4,6 +4,7 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-associated-control": ["warn", { "depth": 4 }],
     "react/only-export-components": ["warn", { "allowConstantExport": true }]
   }
 }
