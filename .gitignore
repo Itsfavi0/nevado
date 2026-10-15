@@ -26,3 +26,8 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Notas de trabajo locales (no forman parte del proyecto)
+CLAUDE.md
+PROGRESS.md
+.claude/
