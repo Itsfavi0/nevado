@@ -2,6 +2,8 @@
 
 **English** · [Español](README.es.md)
 
+**Live demo:** [nevado-nine.vercel.app](https://nevado-nine.vercel.app/)
+
 ![Screenshot of the Nevado website](docs/screenshot.png)
 
 **Nevado** is the website of a **fictional** trekking operator based in Huaraz that also runs routes in Cusco. The goal of the site is for visitors to explore the routes, understand how hard they are and **request a quote or book**.
@@ -141,4 +143,3 @@ All photos are from Peru and are used under the [Unsplash License](https://unspl
 - A map of each route with the GPX track and camps synced to the profile (hovering the profile marks the point on the map).
 - An English version of the site: many of the people trekking in Huaraz are foreigners.
 - Unit tests for `lib/quote.js` with Vitest.
-- An absolute URL in `og:image` once the site has a domain.

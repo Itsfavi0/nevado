@@ -2,6 +2,8 @@
 
 [English](README.md) · **Español**
 
+**Demo en vivo:** [nevado-nine.vercel.app](https://nevado-nine.vercel.app/)
+
 ![Captura de la página de Nevado](docs/screenshot.png)
 
 **Nevado** es la página web de una operadora de trekking **ficticia** con base en Huaraz que también opera rutas en Cusco. El objetivo de la página es que el visitante explore las rutas, entienda su dificultad y **pida una cotización o reserve**.
@@ -141,4 +143,3 @@ Todas las fotos son de Perú y se usan bajo la [licencia de Unsplash](https://un
 - Mapa de cada ruta con el trazado GPX y los campamentos sincronizados con el perfil (al pasar el cursor por el perfil, se marca el punto en el mapa).
 - Versión en inglés: buena parte de quienes hacen trekking en Huaraz son extranjeros.
 - Pruebas unitarias de `lib/quote.js` con Vitest.
-- URL absoluta en `og:image` cuando el sitio tenga dominio.
